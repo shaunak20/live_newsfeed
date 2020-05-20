@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '%uc@+^!a-@jp5_c@@-gtp0lk0f!ztxh-vdbz0&#rr5@aqlz4v3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['finiq-news-feed.herokuapp.com']
+ALLOWED_HOSTS = ['finiq-news-feed.herokuapp.com','127.0.0.1']
 
 
 # Application definition

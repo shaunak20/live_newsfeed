@@ -219,6 +219,9 @@ def index(request):
     index_title=[]
     index_description=[]
     index_imgurl=[]
+    index_title2=[]
+    index_description2=[]
+    index_imgurl2=[]
     newsapi = NewsApiClient(api_key = '3de8090563454aadbd116bb099718ded')
     string = ['Nifty', 'Sensex', 'S&P', 'Dow']
     y = re.compile('<[^>]+>')
@@ -232,13 +235,16 @@ def index(request):
             start_date = x
         all_articles = newsapi.get_everything(q = i, from_param = start_date.strftime("%Y-%m-%d"), language = "en", sort_by = "relevancy", page_size = 5)
         articles = all_articles['articles']
-        for j in range(2):
-            if ((articles[j]['title'] not in index_title) &(articles[j]['title'].find('?')==-1)) :
-                index_title.append(articles[j]['title'])
-                index_description.append(y.sub('', articles[j]['description']))
-                index_imgurl.append(articles[j]['urlToImage'])
-            else:
-                pass
+        for j in range(len(articles)):
+            if(articles[j]['title'].find('?')==-1 & articles[j]['title'].find('sleeping')==-1):
+                index_title2.append(articles[j]['title'])
+                index_description2.append(y.sub('',articles[j]['description']))
+                index_imgurl2.append(articles[j]['urlToImage'])
+
+    for i in range(len(index_title2)):
+        index_title = list(dict.fromkeys(index_title2))
+        index_description = list(dict.fromkeys(index_description2))
+        index_imgurl = list(dict.fromkeys(index_imgurl2))
     for i in range(1,5):
         if index_imgurl[i] != None and index_title[i] != None and index_description[i] != None:
             f=stocknews(headline=index_title[i],imgurl=index_imgurl[i])
