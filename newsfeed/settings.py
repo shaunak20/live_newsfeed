@@ -25,7 +25,7 @@ SECRET_KEY = '%uc@+^!a-@jp5_c@@-gtp0lk0f!ztxh-vdbz0&#rr5@aqlz4v3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['finiq-news-feed.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['finiq-news-feed.herokuapp.com','127.0.0.1','livenewsfeed.herokuapp.com']
 
 
 # Application definition
