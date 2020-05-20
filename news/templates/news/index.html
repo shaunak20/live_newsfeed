@@ -190,12 +190,12 @@
         <div class="col-md-4">
           <div class="container-fluid">
             <div class="row text-white">
-              <canvas  id="chart3"></canvas>
+              <canvas  id="chart2"></canvas>
             </div>
             <br>
             <br>
             <div class="row text-white">
-              <canvas  id="chart2"></canvas>
+              <canvas  id="chart3"></canvas>
             </div>
           </div>
 
@@ -402,7 +402,7 @@
               <br>
               <br>
               <div class="row text-white">
-                <canvas  id="lineChart5"></canvas>
+                <canvas  id="lineChart6"></canvas>
               </div>
             </div>
 
@@ -421,22 +421,22 @@
 
 
   <!-- Index Graph -->
-    <script >
+    <script>
 
   var chart    = document.getElementById('chart').getContext('2d'),
 
-  gradient = chart.createLinearGradient(0, 0, 0, 450);
+  gradient2 = chart.createLinearGradient(0, 0, 0, 450);
 
-  gradient.addColorStop(0, 'rgba(0,255,0, 0.5)');
-  gradient.addColorStop(0.5, 'rgba(0,255, 0, 0.25)');
-  gradient.addColorStop(1, 'rgba(0,255, 0, 0)');
+  gradient2.addColorStop(0, 'rgba(0,255,0, 0.5)');
+  gradient2.addColorStop(0.5, 'rgba(0,255, 0, 0.25)');
+  gradient2.addColorStop(1, 'rgba(0,255, 0, 0)');
 
 
   var data  = {
       labels:[{% for i in dates %}"{{ i }}",{% endfor %}],
       datasets: [{
   			label: 'Dow Jones',
-  			backgroundColor: gradient,
+  			backgroundColor: gradient2,
   			pointBackgroundColor: 'rgba(0,255,0, 0.5)',
   			borderWidth: 1,
   			borderColor: 'rgba(0,255,0, 0.5)',
@@ -504,6 +504,46 @@
   	options: options
   });
 
+  setInterval(function(){
+
+            var data  = {
+              labels:[{% for i in dates %}"{{ i }}",{% endfor %}],
+              datasets: [{
+                label: "Dow Jones",
+                backgroundColor: gradient2,
+                pointBackgroundColor: 'rgba(0,255,0, 0.5)',
+                borderWidth: 1,
+                borderColor: 'rgba(0,255,0, 0.5)',
+                data: {{dow}},
+              }]
+            };
+             var chartInstance = new Chart(chart, {
+              type: 'line',
+              data: data,
+              options: options
+            });
+          }, 5000);
+
+          setInterval(function(){
+            var data  = {
+              labels:[{% for i in dates %}"{{ i }}",{% endfor %}],
+              datasets: [{
+                label: "S&P 500",
+                backgroundColor: gradient2,
+                pointBackgroundColor: 'rgba(0,255,0, 0.5)',
+                borderWidth: 1,
+                borderColor: 'rgba(0,255,0, 0.5)',
+                data: {{sp}},
+              }]
+            };
+               var chartInstance = new Chart(chart, {
+              type: 'line',
+              data: data,
+              options: options
+            });
+          }, 10000);
+
+
 
     </script>
 
@@ -511,22 +551,22 @@
 
     <!-- Sensex Graph -->
 
-    <script >
+    <script>
 
-    var chart5    = document.getElementById('chart5').getContext('2d'),
+    var chart5  = document.getElementById('chart5').getContext('2d'),
 
-    gradient = chart5.createLinearGradient(0, 0, 0, 450);
+    gradient1 = chart5.createLinearGradient(0, 0, 0, 450);
 
-    gradient.addColorStop(0, 'rgba(17,205,239,0.5)');
-    gradient.addColorStop(0.5, 'rgba(17,205,239,0.25)');
-    gradient.addColorStop(1, 'rgba(17,205,239,0)');
+    gradient1.addColorStop(0, 'rgba(0,0,200,0.5)');
+    gradient1.addColorStop(0.5, 'rgba(0,0,200,0.25)');
+    gradient1.addColorStop(1, 'rgba(0,0,200,0)');
 
 
     var data  = {
         labels:[{% for i in bsedates %}"{{ i }}",{% endfor %}],
         datasets: [{
     			label: "BSE SENSEX",
-    			backgroundColor: gradient,
+    			backgroundColor: gradient1,
     			pointBackgroundColor: 'rgba(17,205,239,0.5)',
     			borderWidth: 1,
     			borderColor: 'rgba(17,205,239,0.5)',
@@ -591,8 +631,47 @@
     var chartInstance = new Chart(chart5, {
         type: 'line',
         data: data,
-    		options: options
+    	options: options
     });
+
+    setInterval(function(){
+
+					  var data  = {
+						  labels:[{% for i in bsedates %}"{{ i }}",{% endfor %}],
+						  datasets: [{
+							label: "BSE SENSEX",
+							backgroundColor: gradient1,
+							pointBackgroundColor: 'rgba(17,205,239,0.5)',
+							borderWidth: 1,
+							borderColor: 'rgba(17,205,239,0.5)',
+							data: {{bse}},
+						  }]
+					  };
+  					   var chartInstance = new Chart(chart5, {
+  						  type: 'line',
+  						  data: data,
+  							options: options
+  					  });
+  					}, 5000);
+
+  					setInterval(function(){
+						  var data  = {
+							  labels:[{% for i in bsedates %}"{{ i }}",{% endfor %}],
+							  datasets: [{
+									label: "NIFTY",
+									backgroundColor: gradient1,
+									pointBackgroundColor: 'rgba(17,205,239,0.5)',
+									borderWidth: 1,
+									borderColor: 'rgba(17,205,239,0.5)',
+									data: {{nifty}},
+							  }]
+						  };
+  					     var chartInstance = new Chart(chart5, {
+  						  type: 'line',
+  						  data: data,
+  							options: options
+  					  });
+  					}, 10000);
     </script>
 
 
@@ -679,17 +758,19 @@
   };
 
 
+
   var chartInstance = new Chart(chart2, {
       type: 'line',
       data: data,
   		options: options
   });
+
   </script>
 
 
   <!-- Currency Graph 2-->
 
-  <script >
+  <script>
 
   var chart3    = document.getElementById('chart3').getContext('2d'),
 
@@ -770,6 +851,45 @@
       data: data,
   		options: options
   });
+
+  setInterval(function(){
+
+					  var data  = {
+						  labels:[{% for i in forexdates2 %}"{{ i }}",{% endfor %}],
+						  datasets: [{
+								label: "{{pair2}}",
+								backgroundColor: gradient,
+								pointBackgroundColor: 'rgba(255, 0,0, 0.5)',
+								borderWidth: 1,
+								borderColor: '#911215',
+								data: {{rates2}},
+						  }]
+					  };
+					   var chartInstance = new Chart(chart3, {
+						  type: 'line',
+						  data: data,
+							options: options
+					  });
+					}, 5000);
+
+					setInterval(function(){
+					  var data  = {
+						  labels:[{% for i in forexdates3 %}"{{ i }}",{% endfor %}],
+						  datasets: [{
+								label: "{{pair3}}",
+								backgroundColor: gradient,
+								pointBackgroundColor: 'rgba(255, 0,0, 0.5)',
+								borderWidth: 1,
+								borderColor: '#911215',
+								data: {{rates3}},
+						  }]
+					  };
+					     var chartInstance = new Chart(chart3, {
+						  type: 'line',
+						  data: data,
+							options: options
+					  });
+					}, 10000);
   </script>
 
 
@@ -871,10 +991,10 @@
   <!-- Indian equities -->
   <script >
 
-  var ctx5 = $("#lineChart5");
+  var ctx6= $("#lineChart6");
 
   //line chart data
-  var data5 = {
+  var data6 = {
   labels:['TCS','ICICI','HDFC','INFY','L&T','RELIANCE'],
   datasets: [
    {
@@ -902,7 +1022,7 @@
   };
 
   //options
-  var options5 = {
+  var options6 = {
   responsive: true,
   title: {
    display: true,
@@ -944,11 +1064,81 @@
   };
 
   //create Chart class object
-  var chart5 = new Chart(ctx5, {
+  var chart6 = new Chart(ctx6, {
   type: "bar",
-  data: data5,
-  options: options5
+  data: data6,
+  options: options6
   });
+
+  setInterval(function(){
+
+    var data6 = {
+    labels:['TCS','ICICI','HDFC','INFY','L&T','RELIANCE'],
+    datasets: [
+     {
+       label:"Live Market Performance (PnL in INR)",
+       data: {{diff3}},
+       backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+     }
+    ]
+    };
+					   var chart6 = new Chart(chart6, {
+						  type: 'bar',
+						  data: data6,
+							options: options6
+					  });
+					}, 5000);
+
+          setInterval(function(){
+
+            var data6 = {
+            labels:['TCS','ICICI','HDFC','INFY','L&T','RELIANCE'],
+            datasets: [
+             {
+               label:"Live Market Performance (PnL in INR)",
+               data: {{diff3}},
+               backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+             }
+            ]
+            };
+        					   var chart6 = new Chart(chart6, {
+        						  type: 'bar',
+        						  data: data6,
+        							options: options6
+        					  });
+        					}, 10000);
   </script>
 
 </body>

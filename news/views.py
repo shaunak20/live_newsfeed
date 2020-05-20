@@ -103,6 +103,9 @@ def index(request):
             second=arr[1][0:3]
             pairs.append(first+'/'+second)
 
+    pairs = list(dict.fromkeys(pairs))
+
+
     pairs[0].split('/')
     first=((pairs[0].split('/'))[0])[:3]
     second=((pairs[0].split('/'))[1])[0:3]
@@ -112,6 +115,10 @@ def index(request):
     third=((pairs[1].split('/'))[0])[:3]
     fourth=((pairs[1].split('/'))[1])[0:3]
     pair2=third+'/'+fourth
+
+    fifth=((pairs[2].split('/'))[0])[:3]
+    sixth=((pairs[2].split('/'))[1])[0:3]
+    pair3=fifth+'/'+sixth
 
     imglink3=imglink3[0]
     fxcenter=head3[0]
@@ -128,9 +135,13 @@ def index(request):
     rates=[]
     forexdates=[]
     rates2=[]
+    rates3=[]
     forexdates2=[]
     before=0.0
     before2=0.0
+    before3=0.0
+    forexdates3=[]
+
     c = CurrencyRates()
     for i in range(0,21):
         new=c.get_rate(first,second,end_date)
@@ -148,6 +159,16 @@ def index(request):
             rates2.append(new)
             forexdates2.append(end_date.strftime("%Y-%m-%d"))
         before2=new
+        end_date=end_date+timedelta(days=1)
+
+    end_date=start_date-timedelta(days=21)
+
+    for i in range(0,21):
+        new=c.get_rate(fifth,sixth,end_date)
+        if(before3!=new):
+            rates3.append(new)
+            forexdates3.append(end_date.strftime("%Y-%m-%d"))
+        before3=new
         end_date=end_date+timedelta(days=1)
 
 
@@ -190,8 +211,12 @@ def index(request):
     end=end.strftime('%d/%m/%Y')
     start=start.strftime('%d/%m/%Y')
     dataframe2=investpy.get_index_historical_data(index='Dow 30', country='united states', from_date=start, to_date=end)
+    dataframesp=investpy.get_index_historical_data(index='S&P 500', country='united states', from_date=start, to_date=end)
+
     dprice=(round(dataframe2['Close'],3))
     dow=list((round(dataframe2['Close'],3)))
+    dpricesp=(round(dataframesp['Close'],3))
+    sp=list((round(dataframesp['Close'],3)))
 
     dumvar2=dprice.index
     dates=[]
@@ -206,8 +231,12 @@ def index(request):
     end2=end2.strftime('%d/%m/%Y')
     start2=start2.strftime('%d/%m/%Y')
     dataframe=investpy.get_index_historical_data(index='BSE Sensex', country='india', from_date=start2, to_date=end2)
+    dataframenifty=investpy.get_index_historical_data(index='Nifty 50', country='india', from_date=start2, to_date=end2)
     dprice2=(round(dataframe['Close'],3))
     bse=list((round(dataframe['Close'],3)))
+
+    dpricenifty=(round(dataframenifty['Close'],3))
+    nifty=list((round(dataframenifty['Close'],3)))
 
     dumvar=dprice2.index
     bsedates=[]
@@ -355,4 +384,4 @@ def index(request):
 
 
 
-    return render(request, 'news/index.html',{'query_results1':query_results1,'query_results2':query_results2,'query_results3':query_results3,'query_results4':query_results4,'query_results5':query_results5,'query_results6':query_results6,'fxcenter':fxcenter,'head3':head3,'head4':head4,'context':context,'imglink3':imglink3,'pairs':pairs,'dow':dow,'dates':dates,'rates':rates,'forexdates':forexdates,'pair1':pair1,'rates2':rates2,'forexdates2':forexdates2,'pair2':pair2,'diff':diff,'bse':bse,'bsedates':bsedates,'diff3':diff3,'headeq':headeq,'imgurleq':imgurleq,'index_centertitle':index_centertitle,'index_centerdescription':index_centerdescription,'index_centerimgurl':index_centerimgurl,'title_center_eq':title_center_eq,'imgURL_center_eq':imgURL_center_eq,'desc_center_eq':desc_center_eq,'img_url_fx':img_url_fx})
+    return render(request, 'news/index.html',{'query_results1':query_results1,'query_results2':query_results2,'query_results3':query_results3,'query_results4':query_results4,'query_results5':query_results5,'query_results6':query_results6,'fxcenter':fxcenter,'head3':head3,'head4':head4,'context':context,'imglink3':imglink3,'pairs':pairs,'dow':dow,'dates':dates,'rates':rates,'forexdates':forexdates,'pair1':pair1,'rates2':rates2,'forexdates2':forexdates2,'pair2':pair2,'diff':diff,'bse':bse,'bsedates':bsedates,'diff3':diff3,'headeq':headeq,'imgurleq':imgurleq,'index_centertitle':index_centertitle,'index_centerdescription':index_centerdescription,'index_centerimgurl':index_centerimgurl,'title_center_eq':title_center_eq,'imgURL_center_eq':imgURL_center_eq,'desc_center_eq':desc_center_eq,'img_url_fx':img_url_fx,'pair3':pair3,'rates3':rates3,'forexdates3':forexdates3,'nifty':nifty,'sp':sp})
